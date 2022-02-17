@@ -24,6 +24,7 @@ module.exports = function toReadable(number) {
         '19': 'nineteen',
     },
     obj2 = {
+        '10': 'ten',
         '20': 'twenty',
         '30': 'thirty',
         '40': 'forty',
@@ -70,39 +71,66 @@ if (number.toString().length === 1) {
         };
     };
     result = `${des} ${ed}`;
-} else if (number.toString().length === 3) {
+} else if (number.toString().length === 3 && number.toString()[1] === '0' && number.toString()[2] === '0') {
+    for (let key in obj0) {
+        if (key === number.toString()[0]) {
+            result = obj0[key] + ' hundred';
+        };
+    };
+} else if (number.toString().length === 3 && number.toString()[1] === '0') {
+        for (let key in obj0) {
+            if (key === number.toString()[0]) {
+                sot = obj0[key];
+            };
+        };
+        for (let key in obj0) {
+            if (key === number.toString()[2]){
+                ed = obj0[key];
+        };
+        result = `${sot} hundred ${ed}`;
+    };
+} else if (number.toString().length === 3 && number.toString()[2] === '0') {
     for (let key in obj0) {
         if (key === number.toString()[0]) {
             sot = obj0[key];
         };
     };
-
-    if (number.toString()[1] === '0') {
-        des = '';
-    } else if (number.toString()[1] === '1') {
-        for (let key in obj1) {
-            if (key === (number.toString()[1] + number.toString()[2])) {
-                des = ' ' + obj1[key];
-            };
-        };
-    } else {
-        for (let key in obj2) {
-            if (key === (number.toString()[1] + '0')) {
-                des = ' ' + obj2[key];
-            };
+    for (let key in obj2) {
+        if (key === number.toString()[1] + '0'){
+            des = obj2[key];
+    };
+    result = `${sot} hundred ${des}`;
+};
+} else if (number.toString().length === 3 && number.toString()[1] === '1') {
+    for (let key in obj0) {
+        if (key === number.toString()[0]) {
+            sot = obj0[key];
         };
     };
-
-    if (number.toString()[2] === '0') {
-        ed = '';
-    } else {
-        for (let key in obj0) {
-            if (key === number.toString()[2]) {
-                ed = ' ' + obj0[key];
-            };
+    for (let key in obj1) {
+        if (key === (number.toString()[1] + number.toString()[2])) {
+            des = obj1[key];
         };
-    }
-    result = `${sot} hundred${des}${ed}`;
-}
+    };
+    result = `${sot} hundred ${des}`;
+} else {
+    for (let key in obj0) {
+        if (key === number.toString()[0]) {
+            sot = obj0[key];
+        };
+    };
+    for (let key in obj2) {
+        if (key === number.toString()[1] + '0'){
+            des = obj2[key];
+        };
+    };
+    for (let key in obj0) {
+        if (key === number.toString()[2]) {
+            ed = obj0[key];
+        };
+    };
+    result = `${sot} hundred ${des} ${ed}`;
+};
+
 return result;
 };
